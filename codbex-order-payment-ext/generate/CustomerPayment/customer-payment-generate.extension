@@ -1,0 +1,5 @@
+{
+    "module": "codbex-order-payment-ext/generate/CustomerPayment/customer-payment-generate.js",
+    "extensionPoint": "codbex-orders-custom-action",
+    "description": "Generate Customer Payment From Sales Order Custom Action"
+}
