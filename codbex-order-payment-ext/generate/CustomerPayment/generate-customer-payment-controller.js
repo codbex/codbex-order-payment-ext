@@ -1,20 +1,14 @@
 const app = angular.module('templateApp', ['ideUI', 'ideView']);
 
 app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'messageHub', function ($scope, $http, ViewParameters, messageHub) {
+
     const params = ViewParameters.get();
     $scope.showDialog = true;
 
-    const salesOrderDataUrl = "/services/ts/codbex-order-payment-ext/generate/CustomerPayment/api/GenerateCustomerPaymentService.ts/salesOrderData/" + params.id;
-    $http.get(salesOrderDataUrl)
-        .then(function (response) {
-            $scope.SalesOrderData = response.data;
-        });
-
-    const salesOrderItemsUrl = "/services/ts/codbex-order-payment-ext/generate/CustomerPayment/api/GenerateCustomerPaymentService.ts/salesOrderItemsData/" + params.id;
-    $http.get(salesOrderItemsUrl)
-        .then(function (response) {
-            $scope.SalesOrderItemsData = response.data;
-        });
+    $scope.entity = {};
+    $scope.forms = {
+        details: {},
+    };
 
     const paymentMethodsUrl = "/services/ts/codbex-methods/gen/codbex-methods/api/Methods/PaymentMethodService.ts/";
     $http.get(paymentMethodsUrl)
@@ -36,48 +30,41 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
 
         });
 
-    // if (Object.keys(params).length) {
+    const salesOrderDataUrl = "/services/ts/codbex-order-payment-ext/generate/CustomerPayment/api/GenerateCustomerPaymentService.ts/salesOrderData/" + params.id;
+    $http.get(salesOrderDataUrl)
+        .then(function (response) {
+            $scope.SalesOrderData = response.data;
+        });
 
-    //     console.log(params);
+    $scope.create = function () {
 
-    //     $scope.entity = params.entity;
-    //     $scope.optionsPaymentMethod = params.optionsPaymentMethod;
-    // }
+        const paymentDate = $scope.entity.Date;
+        const paymentMethod = $scope.entity.PaymentMethod;
+        const paymentAmount = $scope.entity.Amount;
 
+        $http.get(salesOrderDataUrl)
+            .then(function (response) {
+                let salesOrder = response.data;
 
-    // $scope.generateInvoice = function () {
-    //     const invoiceUrl = "/services/ts/codbex-invoices/gen/codbex-invoices/api/salesinvoice/SalesInvoiceService.ts/";
+                const customerPayment = {
+                    "Date": paymentDate,
+                    "Amount": paymentAmount,
+                    "Currency": salesOrder.Currency,
+                    "Company": salesOrder.Company,
+                    "PaymentMethod": paymentMethod,
+                    // "Name": salesOrder.Customer.Name,
+                    "Reference": salesOrder.Reference
+                };
 
-    //     $http.post(invoiceUrl, $scope.SalesOrderData)
-    //         .then(function (response) {
-    //             $scope.Invoice = response.data
-    //             if (!angular.equals($scope.OrderItems, {})) {
-    //                 $scope.SalesOrderItemsData.forEach(orderItem => {
-    //                     const salesInvoiceItem = {
-    //                         "SalesInvoice": $scope.Invoice.Id,
-    //                         "Product": orderItem.Product,
-    //                         "Quantity": orderItem.Quantity,
-    //                         "UoM": orderItem.UoM,
-    //                         "Price": orderItem.Price,
-    //                         "Net": orderItem.Net,
-    //                         "VAT": orderItem.VAT,
-    //                         "Gross": orderItem.Gross
-    //                     };
-    //                     let invoiceItemUrl = "/services/ts/codbex-invoices/gen/codbex-invoices/api/salesinvoice/SalesInvoiceItemService.ts/"
-    //                     $http.post(invoiceItemUrl, salesInvoiceItem);
-    //                 });
-    //             }
+                console.log(customerPayment);
 
-    //             console.log("Invoice created successfully: ", response.data);
-    //             //alert("Invoice created successfully");
-    //             $scope.closeDialog();
-    //         })
-    //         .catch(function (error) {
-    //             console.error("Error creating invoice: ", error);
-    //             //alert("Error creating sales invoice");
-    //             $scope.closeDialog();
-    //         });
-    // };
+            });
+
+        messageHub.showAlertSuccess("CustomerPayment", "CustomerPayment successfully created");
+    };
+
+    // make cancel()
+
 
     $scope.closeDialog = function () {
         $scope.showDialog = false;
