@@ -13,6 +13,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
     const paymentMethodsUrl = "/services/ts/codbex-methods/gen/codbex-methods/api/Methods/PaymentMethodService.ts/";
     const salesOrderDataUrl = "/services/ts/codbex-order-payment-ext/generate/CustomerPayment/api/GenerateCustomerPaymentService.ts/salesOrderData/" + params.id;
     const customerUrl = "/services/ts/codbex-partners/gen/codbex-partners/api/Customers/CustomerService.ts/";
+    const customerPaymentUrl = "/services/ts/codbex-payments/gen/codbex-payments/CustomerPayment/api/CustomerPaymentService.ts";
 
     $http.get(paymentMethodsUrl)
         .then(function (response) {
@@ -44,28 +45,42 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
             .then(function (response) {
                 let salesOrder = response.data;
 
+                console.log("so" + JSON.stringify(salesOrder));
+
                 $http.get(customerUrl + salesOrder.Customer)
                     .then(function (response) {
+
                         const customerName = response.data.Name;
+
+                        const customerPayment = {
+                            "Date": paymentDate,
+                            "Valor": paymentValor,
+                            "Amount": paymentAmount,
+                            "Currency": salesOrder.Currency,
+                            "Company": salesOrder.Company,
+                            "PaymentMethod": paymentMethod,
+                            "Name": customerName,
+                            "Reason": salesOrder.Number,
+                            "Reference": salesOrder.Reference
+                        };
+
+                        console.log(customerPayment);
+
+                        $http.post(customerPaymentUrl, customerPayment)
+                            .then(function (response) {
+                                console.log(response);
+                                $scope.closeDialog();
+                            })
+                            .catch(function (error) {
+                                console.error("Error creating Customer Payment", error);
+                                $scope.closeDialog();
+                            });
                     });
 
-                const customerPayment = {
-                    "Date": paymentDate,
-                    "Valor": paymentValor,
-                    "Amount": paymentAmount,
-                    "Currency": salesOrder.Currency,
-                    "Company": salesOrder.Company,
-                    "PaymentMethod": paymentMethod,
-                    // "Name": customerName,
-                    "Reference": salesOrder.Reference
-                };
-
-                console.log(customerPayment);
-
+                messageHub.showAlertSuccess("CustomerPayment", "CustomerPayment successfully created");
             });
-
-        messageHub.showAlertSuccess("CustomerPayment", "CustomerPayment successfully created");
     };
+
 
     // make cancel()
 
