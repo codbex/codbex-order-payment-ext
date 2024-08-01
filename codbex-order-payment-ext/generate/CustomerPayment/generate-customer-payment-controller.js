@@ -11,6 +11,9 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
     };
 
     const paymentMethodsUrl = "/services/ts/codbex-methods/gen/codbex-methods/api/Methods/PaymentMethodService.ts/";
+    const salesOrderDataUrl = "/services/ts/codbex-order-payment-ext/generate/CustomerPayment/api/GenerateCustomerPaymentService.ts/salesOrderData/" + params.id;
+    const customerUrl = "/services/ts/codbex-partners/gen/codbex-partners/api/Customers/CustomerService.ts/";
+
     $http.get(paymentMethodsUrl)
         .then(function (response) {
             let paymenMethodOptions = response.data;
@@ -30,29 +33,30 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
 
         });
 
-    const salesOrderDataUrl = "/services/ts/codbex-order-payment-ext/generate/CustomerPayment/api/GenerateCustomerPaymentService.ts/salesOrderData/" + params.id;
-    $http.get(salesOrderDataUrl)
-        .then(function (response) {
-            $scope.SalesOrderData = response.data;
-        });
-
     $scope.create = function () {
 
         const paymentDate = $scope.entity.Date;
         const paymentMethod = $scope.entity.PaymentMethod;
         const paymentAmount = $scope.entity.Amount;
+        const paymentValor = $scope.entity.Valor;
 
         $http.get(salesOrderDataUrl)
             .then(function (response) {
                 let salesOrder = response.data;
 
+                $http.get(customerUrl + salesOrder.Customer)
+                    .then(function (response) {
+                        const customerName = response.data.Name;
+                    });
+
                 const customerPayment = {
                     "Date": paymentDate,
+                    "Valor": paymentValor,
                     "Amount": paymentAmount,
                     "Currency": salesOrder.Currency,
                     "Company": salesOrder.Company,
                     "PaymentMethod": paymentMethod,
-                    // "Name": salesOrder.Customer.Name,
+                    // "Name": customerName,
                     "Reference": salesOrder.Reference
                 };
 
