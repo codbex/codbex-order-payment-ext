@@ -13,25 +13,18 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
     const paymentMethodsUrl = "/services/ts/codbex-methods/gen/codbex-methods/api/Methods/PaymentMethodService.ts/";
     const salesOrderDataUrl = "/services/ts/codbex-order-payment-ext/generate/CustomerPayment/api/GenerateCustomerPaymentService.ts/salesOrderData/" + params.id;
     const customerUrl = "/services/ts/codbex-partners/gen/codbex-partners/api/Customers/CustomerService.ts/";
-    const customerPaymentUrl = "/services/ts/codbex-payments/gen/codbex-payments/CustomerPayment/api/CustomerPaymentService.ts";
+    const customerPaymentUrl = "/services/ts/codbex-payments/gen/codbex-payments/api/CustomerPayment/CustomerPaymentService.ts/";
 
     $http.get(paymentMethodsUrl)
         .then(function (response) {
             let paymenMethodOptions = response.data;
 
-            let newPaymentOptions = [];
-
-            paymenMethodOptions.forEach(function (value) {
-                let option = {
+            $scope.optionsPaymentMethod = paymenMethodOptions.map(function (value) {
+                return {
                     value: value.Id,
                     text: value.Name
-                }
-
-                newPaymentOptions.push(option);
+                };
             });
-
-            $scope.optionsPaymentMethod = newPaymentOptions;
-
         });
 
     $scope.create = function () {
@@ -44,8 +37,6 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
         $http.get(salesOrderDataUrl)
             .then(function (response) {
                 let salesOrder = response.data;
-
-                console.log("so" + JSON.stringify(salesOrder));
 
                 $http.get(customerUrl + salesOrder.Customer)
                     .then(function (response) {
