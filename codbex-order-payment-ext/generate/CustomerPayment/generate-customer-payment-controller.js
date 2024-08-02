@@ -14,6 +14,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
     const salesOrderDataUrl = "/services/ts/codbex-order-payment-ext/generate/CustomerPayment/api/GenerateCustomerPaymentService.ts/salesOrderData/" + params.id;
     const customerUrl = "/services/ts/codbex-partners/gen/codbex-partners/api/Customers/CustomerService.ts/";
     const customerPaymentUrl = "/services/ts/codbex-payments/gen/codbex-payments/api/CustomerPayment/CustomerPaymentService.ts/";
+    const salesOrderPaymentUrl = "/services/ts/codbex-orders/gen/codbex-orders/api/SalesOrder/SalesOrderPaymentService.ts/";
 
     $http.get(paymentMethodsUrl)
         .then(function (response) {
@@ -52,33 +53,40 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
                             "PaymentMethod": paymentMethod,
                             "Name": customerName,
                             "Reason": salesOrder.Number,
-                            "Reference": salesOrder.Reference
                         };
-
-                        console.log(customerPayment);
 
                         $http.post(customerPaymentUrl, customerPayment)
                             .then(function (response) {
-                                console.log(response);
-                                $scope.closeDialog();
+
+                                const salesOrderPayment = {
+                                    "Amount": paymentAmount,
+                                    "CustomerPayment": response.data.Id,
+                                    "SalesOrder": salesOrder.Id,
+                                }
+
+                                $http.post(salesOrderPaymentUrl, salesOrderPayment)
+                                    .then(function (response) {
+                                        $scope.closeDialog();
+                                    }).catch(function (error) {
+                                        console.error("Error creating Customer Payment", error);
+                                        $scope.closeDialog();
+                                    });
+
                             })
                             .catch(function (error) {
                                 console.error("Error creating Customer Payment", error);
                                 $scope.closeDialog();
                             });
+
                     });
 
                 messageHub.showAlertSuccess("CustomerPayment", "CustomerPayment successfully created");
             });
     };
 
-
-    // make cancel()
-
-
     $scope.closeDialog = function () {
         $scope.showDialog = false;
-        messageHub.closeDialogWindow("sales-invoice-generate");
+        messageHub.closeDialogWindow("customer-payment-generate");
     };
 
     document.getElementById("dialog").style.display = "block";

@@ -83,9 +83,6 @@
                                     </fd-combobox-input>
                                 </div>
                             </fd-form-item>
-                            <!-- <div class="main-text">
-                                <p>Are you sure you want to generate the customer payment?</p>
-                            </div> -->
                             <fd-bar class="dialog-buttons" bar-design="footer" compact="true"
                                 ng-show="action !== 'select'">
                                 <fd-bar-right>
@@ -96,7 +93,7 @@
                                     </fd-bar-element>
                                     <fd-bar-element>
                                         <fd-button class="button red-button" dg-label="Cancel" dg-type="transparent"
-                                            ng-click="cancel()">
+                                            ng-click="closeDialog()">
                                         </fd-button>
                                     </fd-bar-element>
                                 </fd-bar-right>

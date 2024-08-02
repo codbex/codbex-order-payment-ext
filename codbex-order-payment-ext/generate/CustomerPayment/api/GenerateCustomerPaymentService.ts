@@ -17,24 +17,13 @@ class GenerateCustomerPaymentService {
         let salesOrder = this.salesOrderDao.findById(salesOrderId);
 
         return {
+            "Id": salesOrderId,
             "Number": salesOrder.Number,
-            "Date": salesOrder.Date,
-            "Due": salesOrder.Due,
             "Customer": salesOrder.Customer,
-            "Net": salesOrder.Net,
             "Currency": salesOrder.Currency,
-            "Gross": salesOrder.Gross,
-            "Discount": salesOrder.Discount,
-            "Taxes": salesOrder.Taxes,
-            "VAT": salesOrder.VAT,
-            "Total": salesOrder.Total,
-            "Conditions": salesOrder.Conditions,
             "PaymentMethod": salesOrder.PaymentMethod,
-            "SentMethod": salesOrder.SentMethod,
             "Company": salesOrder.Company,
-            "SalesInvoiceStatus": 1,
-            "Operator": salesOrder.Operator,
-            "Reference": salesOrder.UUID
         };
+
     }
 }
