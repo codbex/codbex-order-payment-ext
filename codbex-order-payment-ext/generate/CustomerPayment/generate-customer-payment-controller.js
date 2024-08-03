@@ -37,6 +37,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
         const paymentValor = $scope.entity.Valor;
         const counterpartyIBAN = $scope.entity.CounterpartyIBAN;
         const counterpartyName = $scope.entity.CounterpartyName;
+        const paymentDescription = $scope.entity.Description;
 
         $http.get(salesOrderDataUrl)
             .then(function (response) {
@@ -65,6 +66,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
                                     "CompanyIBAN": companyIban,
                                     "CounterpartyIBAN": counterpartyIBAN,
                                     "CounterpartyName": counterpartyName,
+                                    "Description": paymentDescription,
                                     "Reason": salesOrder.Number,
                                 };
 
