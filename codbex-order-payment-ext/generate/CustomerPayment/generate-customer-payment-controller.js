@@ -15,6 +15,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
     const customerUrl = "/services/ts/codbex-partners/gen/codbex-partners/api/Customers/CustomerService.ts/";
     const customerPaymentUrl = "/services/ts/codbex-payments/gen/codbex-payments/api/CustomerPayment/CustomerPaymentService.ts/";
     const salesOrderPaymentUrl = "/services/ts/codbex-orders/gen/codbex-orders/api/SalesOrder/SalesOrderPaymentService.ts/";
+    const companyUrl = "/services/ts/codbex-companies/gen/codbex-companies/api/Companies/CompanyService.ts/";
 
     $http.get(paymentMethodsUrl)
         .then(function (response) {
@@ -44,40 +45,48 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
 
                         const customerName = response.data.Name;
 
-                        const customerPayment = {
-                            "Date": paymentDate,
-                            "Valor": paymentValor,
-                            "Amount": paymentAmount,
-                            "Currency": salesOrder.Currency,
-                            "Company": salesOrder.Company,
-                            "PaymentMethod": paymentMethod,
-                            "Name": customerName,
-                            "Reason": salesOrder.Number,
-                        };
-
-                        $http.post(customerPaymentUrl, customerPayment)
+                        $http.get(companyUrl + salesOrder.Company)
                             .then(function (response) {
 
-                                const salesOrderPayment = {
-                                    "Amount": paymentAmount,
-                                    "CustomerPayment": response.data.Id,
-                                    "SalesOrder": salesOrder.Id,
-                                }
+                                console.log(response.data.IBAN);
 
-                                $http.post(salesOrderPaymentUrl, salesOrderPayment)
+                                const companyIban = response.data.IBAN;
+
+                                const customerPayment = {
+                                    "Date": paymentDate,
+                                    "Valor": paymentValor,
+                                    "Amount": paymentAmount,
+                                    "Currency": salesOrder.Currency,
+                                    "Company": salesOrder.Company,
+                                    "PaymentMethod": paymentMethod,
+                                    "Name": customerName,
+                                    "CompanyIBAN": companyIban,
+                                    "Reason": salesOrder.Number,
+                                };
+
+                                $http.post(customerPaymentUrl, customerPayment)
                                     .then(function (response) {
-                                        $scope.closeDialog();
-                                    }).catch(function (error) {
+
+                                        const salesOrderPayment = {
+                                            "Amount": paymentAmount,
+                                            "CustomerPayment": response.data.Id,
+                                            "SalesOrder": salesOrder.Id,
+                                        }
+
+                                        $http.post(salesOrderPaymentUrl, salesOrderPayment)
+                                            .then(function (response) {
+                                                $scope.closeDialog();
+                                            }).catch(function (error) {
+                                                console.error("Error creating Customer Payment", error);
+                                                $scope.closeDialog();
+                                            });
+
+                                    })
+                                    .catch(function (error) {
                                         console.error("Error creating Customer Payment", error);
                                         $scope.closeDialog();
                                     });
-
-                            })
-                            .catch(function (error) {
-                                console.error("Error creating Customer Payment", error);
-                                $scope.closeDialog();
                             });
-
                     });
 
                 messageHub.showAlertSuccess("CustomerPayment", "CustomerPayment successfully created");

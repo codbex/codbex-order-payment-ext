@@ -21,7 +21,6 @@ class GenerateCustomerPaymentService {
             "Number": salesOrder.Number,
             "Customer": salesOrder.Customer,
             "Currency": salesOrder.Currency,
-            "PaymentMethod": salesOrder.PaymentMethod,
             "Company": salesOrder.Company,
         };
 
