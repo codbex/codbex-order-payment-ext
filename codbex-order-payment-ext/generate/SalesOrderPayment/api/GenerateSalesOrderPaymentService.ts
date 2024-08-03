@@ -2,7 +2,7 @@ import { SalesOrderRepository as SalesOrderDao } from "codbex-orders/gen/codbex-
 import { Controller, Get } from "sdk/http";
 
 @Controller
-class GenerateCustomerPaymentService {
+class GenerateSalesOrderPaymentService {
 
     private readonly salesOrderDao;
 

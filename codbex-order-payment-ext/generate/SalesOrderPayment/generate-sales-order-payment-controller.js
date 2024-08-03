@@ -11,7 +11,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
     };
 
     const paymentMethodsUrl = "/services/ts/codbex-methods/gen/codbex-methods/api/Methods/PaymentMethodService.ts/";
-    const salesOrderDataUrl = "/services/ts/codbex-order-payment-ext/generate/CustomerPayment/api/GenerateCustomerPaymentService.ts/salesOrderData/" + params.id;
+    const salesOrderDataUrl = "/services/ts/codbex-order-payment-ext/generate/SalesOrderPayment/api/GenerateSalesOrderPaymentService.ts/salesOrderData/" + params.id;
     const customerUrl = "/services/ts/codbex-partners/gen/codbex-partners/api/Customers/CustomerService.ts/";
     const customerPaymentUrl = "/services/ts/codbex-payments/gen/codbex-payments/api/CustomerPayment/CustomerPaymentService.ts/";
     const salesOrderPaymentUrl = "/services/ts/codbex-orders/gen/codbex-orders/api/SalesOrder/SalesOrderPaymentService.ts/";
@@ -83,25 +83,25 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
                                             .then(function (response) {
                                                 $scope.closeDialog();
                                             }).catch(function (error) {
-                                                console.error("Error creating Customer Payment", error);
+                                                console.error("Error creating Sales Order Payment", error);
                                                 $scope.closeDialog();
                                             });
 
                                     })
                                     .catch(function (error) {
-                                        console.error("Error creating Customer Payment", error);
+                                        console.error("Error creating Sales Order Payment", error);
                                         $scope.closeDialog();
                                     });
                             });
                     });
 
-                messageHub.showAlertSuccess("CustomerPayment", "CustomerPayment successfully created");
+                messageHub.showAlertSuccess("SalesOrderPayment", "Sales order Payment successfully created");
             });
     };
 
     $scope.closeDialog = function () {
         $scope.showDialog = false;
-        messageHub.closeDialogWindow("customer-payment-generate");
+        messageHub.closeDialogWindow("sales-order-payment-generate");
     };
 
     document.getElementById("dialog").style.display = "block";

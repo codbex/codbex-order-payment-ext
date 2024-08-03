@@ -1,7 +1,7 @@
 const viewData = {
-    id: 'customer-payment-generate',
-    label: 'Generate Customer Payment',
-    link: '/services/web/codbex-order-payment-ext/generate/CustomerPayment/generate-customer-payment.html',
+    id: 'sales-order-payment-generate',
+    label: 'Generate Sales Order Payment',
+    link: '/services/web/codbex-order-payment-ext/generate/SalesOrderPayment/generate-sales-order-payment.html',
     perspective: 'SalesOrder',
     view: 'SalesOrder',
     type: 'entity',
