@@ -12,11 +12,23 @@
         <theme></theme>
         <link rel="stylesheet"
             href="/services/web/codbex-order-payment-ext/generate/SalesOrderPayment/generate-sales-order-payment.css">
-        <script src="generate-sales-order-payment-controller.js">
-        </script>
+        <style>
+            .wide-form .dialog-content {
+                width: 50%;
+                max-width: 1200px;
+            }
+
+            .wide-form .fd-col-md--6,
+            .wide-form .fd-col-md--8 {
+                flex: 0 0 auto;
+                width: 60%;
+            }
+
+        </style>
+        <script src="generate-sales-order-payment-controller.js"></script>
     </head>
 
-    <body>
+    <body class="wide-form">
         <div class="dialog" id="dialog" ng-show="showDialog">
             <div class="dialog-content">
                 <div class="title">Create Sales Order Payment</div>
@@ -27,7 +39,7 @@
                         <fd-form-group dg-header="Create Sales Order Payment" name="entityForm"
                             class="fd-container fd-form-layout-grid-container">
                             <fd-form-item class="fd-row">
-                                <div class="fd-col fd-col-md--2">
+                                <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idDate" dg-required="true" dg-colon="true">Date</fd-form-label>
                                 </div>
                                 <div class="fd-col fd-col-md--6 fd-col--3">
@@ -41,11 +53,11 @@
                                 </div>
                             </fd-form-item>
                             <fd-form-item class="fd-row">
-                                <div class="fd-col fd-col-md--2">
+                                <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idValor" dg-required="true" dg-colon="true">Valor
                                     </fd-form-label>
                                 </div>
-                                <div class="fd-col  fd-col-md--6 ">
+                                <div class="fd-col fd-col-md--6">
                                     <fd-form-input-message-group dg-inactive="{{ forms.details['Valor'].$valid }}">
                                         <fd-input id="idValor" name="Valor"
                                             state="{{ forms.details['Valor'].$valid ? '' : 'error' }}"
@@ -57,11 +69,11 @@
                                 </div>
                             </fd-form-item>
                             <fd-form-item class="fd-row">
-                                <div class="fd-col fd-col-md--2">
+                                <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idCounterpartyIBAN" dg-required="false" dg-colon="true">
                                         CounterpartyIBAN</fd-form-label>
                                 </div>
-                                <div class="fd-col  fd-col-md--8 ">
+                                <div class="fd-col fd-col-md--8">
                                     <fd-form-input-message-group
                                         dg-inactive="{{ forms.details['CounterpartyIBAN'].$valid }}">
                                         <fd-input id="idCounterpartyIBAN" name="CounterpartyIBAN"
@@ -77,11 +89,11 @@
                                 </div>
                             </fd-form-item>
                             <fd-form-item class="fd-row">
-                                <div class="fd-col fd-col-md--2">
+                                <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idCounterpartyName" dg-required="false" dg-colon="true">
                                         CounterpartyName</fd-form-label>
                                 </div>
-                                <div class="fd-col  fd-col-md--8 ">
+                                <div class="fd-col fd-col-md--8">
                                     <fd-form-input-message-group
                                         dg-inactive="{{ forms.details['CounterpartyName'].$valid }}">
                                         <fd-input id="idCounterpartyName" name="CounterpartyName"
@@ -97,11 +109,11 @@
                                 </div>
                             </fd-form-item>
                             <fd-form-item class="fd-row">
-                                <div class="fd-col fd-col-md--2">
+                                <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idDescription" dg-required="false" dg-colon="true">Description
                                     </fd-form-label>
                                 </div>
-                                <div class="fd-col  fd-col-md--8 ">
+                                <div class="fd-col fd-col-md--8">
                                     <fd-form-input-message-group
                                         dg-inactive="{{ forms.details['Description'].$valid }}">
                                         <fd-input id="idDescription" name="Description"
@@ -117,11 +129,11 @@
                                 </div>
                             </fd-form-item>
                             <fd-form-item class="fd-row">
-                                <div class="fd-col fd-col-md--2">
+                                <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idAmount" dg-required="true" dg-colon="true">Amount
                                     </fd-form-label>
                                 </div>
-                                <div class="fd-col  fd-col-md--6 ">
+                                <div class="fd-col fd-col-md--6">
                                     <fd-step-input dg-id="idAmount" name="Amount"
                                         state="{{ forms.details['Amount'].$valid ? '' : 'error' }}" dg-required="true"
                                         ng-model="entity.Amount" is-readonly="action === 'select'"
@@ -130,11 +142,11 @@
                                 </div>
                             </fd-form-item>
                             <fd-form-item class="fd-row">
-                                <div class="fd-col fd-col-md--2">
+                                <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idPaymentMethod" dg-required="true" dg-colon="true">
                                         PaymentMethod</fd-form-label>
                                 </div>
-                                <div class="fd-col  fd-col-md--8 ">
+                                <div class="fd-col fd-col-md--8">
                                     <fd-combobox-input id="idPaymentMethod" name="PaymentMethod"
                                         state="{{ forms.details['PaymentMethod'].$valid ? '' : 'error' }}"
                                         ng-required="true" ng-model="entity.PaymentMethod"
@@ -158,8 +170,11 @@
                                     </fd-bar-element>
                                 </fd-bar-right>
                             </fd-bar>
+                        </fd-form-group>
+                    </fd-fieldset>
+                </fd-scrollbar>
             </div>
         </div>
     </body>
 
-</html>
+</html
