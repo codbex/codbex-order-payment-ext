@@ -9,29 +9,12 @@
             background-color: rgba(0, 0, 0, 0.5);
         }
 
-        .wide-form .dialog-content {
-            width: 50%;
-            max-width: 1200px;
-        }
-
-        .wide-form .fd-col-md--6,
-        .wide-form .fd-col-md--8 {
-            flex: 0 0 auto;
-            width: 60%;
-        }
-
         .button.red-button {
             background-color: #f44336;
         }
 
         .button.red-button:hover {
             background-color: #d32f2f;
-        }
-
-        .dialog-select {
-            display: flex;
-            flex-direction: row;
-            gap: 1em;
         }
 
         .dialog-content {
