@@ -12,19 +12,6 @@
         <theme></theme>
         <link rel="stylesheet"
             href="/services/web/codbex-order-payment-ext/generate/SalesOrderPayment/generate-sales-order-payment.css">
-        <style>
-            .wide-form .dialog-content {
-                width: 50%;
-                max-width: 1200px;
-            }
-
-            .wide-form .fd-col-md--6,
-            .wide-form .fd-col-md--8 {
-                flex: 0 0 auto;
-                width: 60%;
-            }
-
-        </style>
         <script src="generate-sales-order-payment-controller.js"></script>
     </head>
 
@@ -38,6 +25,7 @@
                     <fd-fieldset ng-form="forms.details">
                         <fd-form-group dg-header="Create Sales Order Payment" name="entityForm"
                             class="fd-container fd-form-layout-grid-container">
+
                             <fd-form-item class="fd-row">
                                 <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idDate" dg-required="true" dg-colon="true">Date</fd-form-label>
@@ -46,12 +34,13 @@
                                     <fd-form-input-message-group dg-inactive="{{ forms.details['Date'].$valid }}">
                                         <fd-input id="idDate" name="Date"
                                             state="{{ forms.details['Date'].$valid ? '' : 'error' }}" ng-required="true"
-                                            ng-model="entity.Date" ng-readonly="action === 'select'" type="date">
+                                            ng-model="paymentEntity.Date" ng-readonly="action === 'select'" type="date">
                                         </fd-input>
                                         <fd-form-message dg-type="error">Incorrect Input</fd-form-message>
                                     </fd-form-input-message-group>
                                 </div>
                             </fd-form-item>
+
                             <fd-form-item class="fd-row">
                                 <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idValor" dg-required="true" dg-colon="true">Valor
@@ -61,13 +50,14 @@
                                     <fd-form-input-message-group dg-inactive="{{ forms.details['Valor'].$valid }}">
                                         <fd-input id="idValor" name="Valor"
                                             state="{{ forms.details['Valor'].$valid ? '' : 'error' }}"
-                                            ng-required="true" ng-model="entity.Valor" ng-readonly="action === 'select'"
-                                            type="date">
+                                            ng-required="true" ng-model="paymentEntity.Valor"
+                                            ng-readonly="action === 'select'" type="date">
                                         </fd-input>
                                         <fd-form-message dg-type="error">Incorrect Input</fd-form-message>
                                     </fd-form-input-message-group>
                                 </div>
                             </fd-form-item>
+
                             <fd-form-item class="fd-row">
                                 <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idCounterpartyIBAN" dg-required="false" dg-colon="true">
@@ -78,7 +68,7 @@
                                         dg-inactive="{{ forms.details['CounterpartyIBAN'].$valid }}">
                                         <fd-input id="idCounterpartyIBAN" name="CounterpartyIBAN"
                                             state="{{ forms.details['CounterpartyIBAN'].$valid ? '' : 'error' }}"
-                                            ng-required="false" ng-model="entity.CounterpartyIBAN"
+                                            ng-required="false" ng-model="paymentEntity.CounterpartyIBAN"
                                             ng-readonly="action === 'select'" ng-minlength="0.0 || 0"
                                             ng-maxlength="22.0 || -1" dg-input-rules="{ patterns: [''] }" type="text"
                                             placeholder="Enter CounterpartyIBAN">
@@ -88,6 +78,7 @@
                                     </fd-form-input-message-group>
                                 </div>
                             </fd-form-item>
+
                             <fd-form-item class="fd-row">
                                 <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idCounterpartyName" dg-required="false" dg-colon="true">
@@ -98,7 +89,7 @@
                                         dg-inactive="{{ forms.details['CounterpartyName'].$valid }}">
                                         <fd-input id="idCounterpartyName" name="CounterpartyName"
                                             state="{{ forms.details['CounterpartyName'].$valid ? '' : 'error' }}"
-                                            ng-required="false" ng-model="entity.CounterpartyName"
+                                            ng-required="false" ng-model="paymentEntity.CounterpartyName"
                                             ng-readonly="action === 'select'" ng-minlength="0.0 || 0"
                                             ng-maxlength="100.0 || -1" dg-input-rules="{ patterns: [''] }" type="text"
                                             placeholder="Enter CounterpartyName">
@@ -108,6 +99,7 @@
                                     </fd-form-input-message-group>
                                 </div>
                             </fd-form-item>
+
                             <fd-form-item class="fd-row">
                                 <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idDescription" dg-required="false" dg-colon="true">Description
@@ -118,7 +110,7 @@
                                         dg-inactive="{{ forms.details['Description'].$valid }}">
                                         <fd-input id="idDescription" name="Description"
                                             state="{{ forms.details['Description'].$valid ? '' : 'error' }}"
-                                            ng-required="false" ng-model="entity.Description"
+                                            ng-required="false" ng-model="paymentEntity.Description"
                                             ng-readonly="action === 'select'" ng-minlength="0.0 || 0"
                                             ng-maxlength="100.0 || -1" dg-input-rules="{ patterns: [''] }" type="text"
                                             placeholder="Enter Description">
@@ -128,6 +120,7 @@
                                     </fd-form-input-message-group>
                                 </div>
                             </fd-form-item>
+
                             <fd-form-item class="fd-row">
                                 <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idAmount" dg-required="true" dg-colon="true">Amount
@@ -136,11 +129,12 @@
                                 <div class="fd-col fd-col-md--6">
                                     <fd-step-input dg-id="idAmount" name="Amount"
                                         state="{{ forms.details['Amount'].$valid ? '' : 'error' }}" dg-required="true"
-                                        ng-model="entity.Amount" is-readonly="action === 'select'"
+                                        ng-model="paymentEntity.Amount" is-readonly="action === 'select'"
                                         placeholder="Enter Amount">
                                     </fd-step-input>
                                 </div>
                             </fd-form-item>
+
                             <fd-form-item class="fd-row">
                                 <div class="fd-col fd-col-md--3">
                                     <fd-form-label for="idPaymentMethod" dg-required="true" dg-colon="true">
@@ -149,10 +143,32 @@
                                 <div class="fd-col fd-col-md--8">
                                     <fd-combobox-input id="idPaymentMethod" name="PaymentMethod"
                                         state="{{ forms.details['PaymentMethod'].$valid ? '' : 'error' }}"
-                                        ng-required="true" ng-model="entity.PaymentMethod"
+                                        ng-required="true" ng-model="paymentEntity.PaymentMethod"
                                         dg-disabled="action === 'select'" dropdown-items="optionsPaymentMethod"
                                         dg-placeholder="Search PaymentMethod ...">
                                     </fd-combobox-input>
+                                </div>
+                            </fd-form-item>
+
+                            <fd-form-item class="fd-row">
+                                <div class="dialog-select">
+                                    <input type="checkbox" ng-model="invoiceEntity.salesInvoice" />
+                                    <p>Do you want sales invoice?</p>
+                                </div>
+                                <div class="dialog-select" ng-if="invoiceEntity.salesInvoice">
+                                    <input type="checkbox" ng-model="invoiceEntity.fullInvoice"
+                                        ng-disabled="invoiceEntity.advanceInvoice || invoiceEntity.partialInvoice" />
+                                    <p>Full invoice</p>
+                                </div>
+                                <div class="dialog-select" ng-if="invoiceEntity.salesInvoice">
+                                    <input type="checkbox" ng-model="invoiceEntity.advanceInvoice"
+                                        ng-disabled="invoiceEntity.fullInvoice || invoiceEntity.partialInvoice" />
+                                    <p>Advance invoice</p>
+                                </div>
+                                <div class="dialog-select" ng-if="invoiceEntity.salesInvoice">
+                                    <input type="checkbox" ng-model="invoiceEntity.partialInvoice"
+                                        ng-disabled="invoiceEntity.fullInvoice || invoiceEntity.advanceInvoice" />
+                                    <p>Partial invoice</p>
                                 </div>
                             </fd-form-item>
                             <fd-bar class="dialog-buttons" bar-design="footer" compact="true"
