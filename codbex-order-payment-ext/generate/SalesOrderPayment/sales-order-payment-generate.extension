@@ -1,5 +1,6 @@
 {
     "module": "codbex-order-payment-ext/generate/SalesOrderPayment/sales-order-payment-generate.js",
     "extensionPoint": "codbex-orders-custom-action",
-    "description": "Generate Sales Order Payment From Sales Order Custom Action"
+    "description": "Generate Sales Order Payment From Sales Order Custom Action",
+    "role": "codbex-orders.SalesOrder.SalesOrderPaymentReadOnly,codbex-orders.SalesOrder.SalesOrderPaymentFullAccess"
 }
