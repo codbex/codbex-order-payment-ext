@@ -1,25 +1,4 @@
 {
     "guid": "codbex-order-payment-ext",
-    "repository": {
-        "type": "git",
-        "branch": "main",
-        "url": "https://github.com/codbex/codbex-order-payment-ext.git"
-    },
-    "dependencies": [],
-    "actions": [
-        {
-            "name": "Build TypeScript",
-            "commands": [
-                {
-                    "os": "unix",
-                    "command": "tsc"
-                },
-                {
-                    "os": "windows",
-                    "command": "cmd /c tsc"
-                }
-            ],
-            "registry": "true"
-        }
-    ]
+    "actions": []
 }
