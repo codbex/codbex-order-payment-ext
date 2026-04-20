@@ -1,4 +1,4 @@
-name: Build - Application
+name: Build - Module
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  modules:
+  main:
     uses: codbex/codbex-infra/.github/workflows/module-build.yaml@main
     with:
       packages-build: codbex-order-payment-ext

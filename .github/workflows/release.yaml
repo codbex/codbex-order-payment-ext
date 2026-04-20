@@ -1,4 +1,4 @@
-name: Release - Application
+name: Release - Module
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
 run-name: 'version set to ${{ inputs.release-version }} for release'
 
 jobs:
-  modules:
+  main:
     uses: codbex/codbex-infra/.github/workflows/module-release.yaml@main
     with:
       packages: codbex-order-payment-ext
@@ -19,16 +19,16 @@ jobs:
       release-version: ${{ inputs.release-version }}
       release-content: |
         ## codbex-order-payment-ext - ${{ inputs.release-version }}
-  
-        Invoice Inventory Extension - Module
-  
+        
+        Order payments Management Module
+        
         ## Installation
-  
+        
         ```
         npm install @codbex/codbex-order-payment-ext@${{ inputs.release-version }}
         ```
-  
+        
         ## Access points:
-  
-        - N/A
+        
+        - [/services/web/codbex-order-payment-ext/gen/](http://localhost:80/services/web/codbex-order-payment-ext/gen/) - Admin Panel
     secrets: inherit
